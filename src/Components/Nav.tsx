@@ -2,12 +2,26 @@ import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { CiFilter } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
-import { AiOutlineLeft } from "react-icons/ai";
+import { BiSolidChevronLeft } from "react-icons/bi";
+import { AiOutlineCheck } from "react-icons/ai";
+import { useQuery } from "@tanstack/react-query";
+import fetchAll from "../assets/fetchAll";
+
 
 const Nav = () => {
   const [categorie, setCategory] = useState("All Categories");
   const [filter, setFilter] = useState(false);
   const [search, setSearch] = useState(false);
+  const { data: categories } = useQuery<string[]>(["categories"], () =>
+    fetchAll("/products/categories")
+  );
+  const { data } = useQuery([categorie], () =>
+    fetchAll(
+      categorie === "All Categories"
+        ? "/products"
+        : "/products/category/" + categorie
+    )
+  );
 
   return (
     <div className="relative font-vitton font-semibold w-screen">
@@ -75,13 +89,41 @@ const Nav = () => {
       )}
       {filter ? (
         <div className="absolute top-0 left-0 h-screen w-screen font-normal">
-          <div className="w-[50%] z-20 absolute top-0 right-0 h-screen bg-white p-20">
-            <div className="flex items-center gap-6">
-              <AiOutlineLeft
-                className="hidden md:block w-4 h-4"
-                onClick={() => setSearch(false)}
-              />
+          <div className="w-full flex flex-col items-center md:w-[50%] z-20 absolute top-0 right-0 h-screen bg-white p-20">
+            <div className="w-full flex items-center justify-center gap-1 sm:gap-6">
+              <div className="p-2 -ml-2">
+                <BiSolidChevronLeft
+                  className="block w-7 h-7 cursor-pointer"
+                  onClick={() => {
+                    setSearch(false);
+                    setFilter(false);
+                  }}
+                />
+              </div>
               <span>Show Filters</span>
+            </div>
+            <div className="flex flex-col items-left gap-4 mt-14">
+              {categories?.map((category) => {
+                return (
+                  <div
+                    className="flex items-center gap-2"
+                    onClick={() => {
+                      if (categorie === category)
+                      {
+                        setCategory("All Categories");
+                        return ;
+                      }
+                      setCategory(category)
+                    }}
+                    key={category}
+                  >
+                    <div className="w-5 h-5 border">
+                      {categorie === category ? <AiOutlineCheck /> : ""}
+                    </div>
+                    {category}
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div
