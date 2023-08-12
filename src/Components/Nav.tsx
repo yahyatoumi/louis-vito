@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BiSearch } from "react-icons/bi";
 import { CiFilter } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
@@ -30,7 +30,38 @@ const Nav = () => {
 
   return (
     <div className="relative font-vitton font-semibold w-screen">
-      <nav className="flex justify-between items-center h-20 px-[5%] border-b">
+      {
+        search ?
+        <div className="sticky top-0 z-50 h-screen w-screen">
+          <div className="z-20 absolute top-20 md:top-0  w-screen flex justify-center items-center h-16 md:h-20 bg-white">
+            <div className="bg-[#f6f5f3] flex items-center w-full md:w-[600px] mx-5 h-8 md:h-10 rounded ">
+              <BiSearch className="w-5 h-5 ml-5 mr-2" />
+              <input
+                type="text"
+                className="bg-transparent w-full outline-none text-sm"
+                placeholder="Search For LV"
+              />
+            </div>
+            <IoMdClose
+              className="hidden md:block w-5 h-5 absolute right-[5%]"
+              onClick={() => {
+                setSearch(false);
+                document.body.style.overflow = "scroll";
+              }}
+            />
+          </div>
+          <div
+            className="z-10 absolute top-20 left-0 right-0 bottom-0 bg-black bg-opacity-40"
+            onClick={() => {
+              setSearch(false);
+              document.body.style.overflow = "scroll";
+            }}
+          >
+            {" "}
+          </div>
+        </div> : <nav
+        className={`flex sticky top-0 z-10 transition-top duration-200 ease-in-out justify-between items-center h-20 px-[5%] border-b bg-white`}
+      >
         <div className="flex items-center gap-8 text-xs">
           <div className="flex items-center gap-3 cursor-pointer">
             <div className="w-5 h-5 flex flex-col justify-around">
@@ -57,7 +88,12 @@ const Nav = () => {
           <span className="hidden md:block cursor-pointer ">My LVs</span>
         </div>
       </nav>
-      <div className="flex sticky z-10 top-0 bg-white justify-between justify-center items-center px-[5%] h-16 text-xs">
+
+      }
+      
+      <div
+        className={`flex top-20  sticky z-10  bg-white justify-between justify-center items-center px-[5%] h-16 text-xs`}
+      >
         <span className="cursor-pointer">{categorie}</span>
         <div className="flex items-center gap-4">
           <div
@@ -91,7 +127,7 @@ const Nav = () => {
           </div>
         </div>
       </div>
-      {search ? (
+      {/* {search ? (
         <div className="absolute top-0 left-0 h-screen w-screen">
           <div className="z-20 absolute top-20 md:top-0  w-screen flex justify-center items-center h-16 md:h-20 bg-white">
             <div className="bg-[#f6f5f3] flex items-center w-full md:w-[600px] mx-5 h-8 md:h-10 rounded ">
@@ -122,10 +158,10 @@ const Nav = () => {
         </div>
       ) : (
         ""
-      )}
+      )} */}
       {filter ? (
         <div className="absolute top-0 left-0 h-screen w-screen font-normal">
-          <div className="w-full flex flex-col items-center md:w-[50%] z-20 absolute top-0 right-0 h-screen bg-white p-20">
+          <div className="w-full flex flex-col items-center md:w-[600px] z-20 absolute top-0 right-0 h-screen bg-white p-20">
             <div className="w-full flex items-center justify-center gap-1 sm:gap-6">
               <div className="p-2 -ml-2">
                 <BiSolidChevronLeft
@@ -176,12 +212,10 @@ const Nav = () => {
         ""
       )}
       {displayCart ? (
-        <div className="absolute z-80 top-0 left-0 h-screen w-screen font-normal">
-          <div className="z-40 absolute top-5 bottom-5 right-0 w-screen sm:w-[500px] font-normal bg-white">
-
-          </div>
+        <div className="sticky top-0 left-0 h-screen w-screen font-normal">
+          <div className="z-50 absolute top-5 bottom-5 right-0 w-screen sm:w-[500px] font-normal bg-white"></div>
           <div
-            className="z-10 absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-40"
+            className="z-50 absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-40"
             onClick={() => setDisplayCart(false)}
           >
             {" "}

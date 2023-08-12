@@ -34,11 +34,11 @@ const Items: React.FC<Prop> = (props) => {
             alt=""
           />
           <div className="flex jusify-center items-center sm:hidden w-full h-[8%] absolute bottom-0 group-hover:flex px-4 ">
-            <div className="w-[50%] bg-[#eee] flex justify-between items-center group2 px-2">
+            <div className="w-[50%] bg-[#eee] flex justify-between items-center group2 px-2 border border-black">
                 <span>Size</span>
                 <BiChevronDown />
             </div>
-            <div className="w-[50%] text-center bg-black text-white"
+            <div className="w-[50%] text-center bg-black text-white border border-black"
             onClick={() => {addHandler(item)}}>ADD</div>
           </div>
           <div className="flex flex-col items-center w-full px-10">
