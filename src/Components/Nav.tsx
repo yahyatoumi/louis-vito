@@ -5,13 +5,18 @@ import { IoMdClose } from "react-icons/io";
 import { BiSolidChevronLeft } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
 import { useQuery } from "@tanstack/react-query";
+import { BsBag } from "react-icons/bs";
 import fetchAll from "../assets/fetchAll";
-
+import Items from "./Items";
+import { useContext } from "react";
+import CartContext from "../Contexts/CartContext";
 
 const Nav = () => {
   const [categorie, setCategory] = useState("All Categories");
   const [filter, setFilter] = useState(false);
   const [search, setSearch] = useState(false);
+  const [cartItems, setCartItems] = useContext(CartContext);
+  const [displayCart, setDisplayCart] = useState(false);
   const { data: categories } = useQuery<string[]>(["categories"], () =>
     fetchAll("/products/categories")
   );
@@ -37,7 +42,10 @@ const Nav = () => {
           </div>
           <div
             className="absolute right-[5%] items-center gap-2 cursor-pointer md:flex md:relative"
-            onClick={() => setSearch(true)}
+            onClick={() => {
+              setSearch(true);
+              document.body.style.overflow = "hidden";
+            }}
           >
             <BiSearch className="w-5 h-5" />
             <span className="hidden md:block">Search</span>
@@ -49,16 +57,38 @@ const Nav = () => {
           <span className="hidden md:block cursor-pointer ">My LVs</span>
         </div>
       </nav>
-      <div className="flex justify-between justify-center items-center px-[5%] h-16 text-xs">
+      <div className="flex sticky z-10 top-0 bg-white justify-between justify-center items-center px-[5%] h-16 text-xs">
         <span className="cursor-pointer">{categorie}</span>
-        <div
-          onClick={() => {
-            setFilter(true);
-          }}
-          className="hover:bg-[#f6f5f3] cursor-pointer flex items-center gap-2 h-8 px-3 rounded-3xl border border-black"
-        >
-          <span>Filter</span>
-          <CiFilter className="" />
+        <div className="flex items-center gap-4">
+          <div
+            onClick={() => {
+              setFilter(true);
+              document.body.style.overflow = "hidden";
+            }}
+            className="hover:bg-[#f6f5f3] cursor-pointer flex items-center gap-2 h-8 px-3 rounded-3xl border border-black"
+          >
+            <span>Filter</span>
+            <CiFilter className="" />
+          </div>
+          <div
+            className="relative w-8 h-8 flex justify-center items-center cursor-pointer"
+            onClick={() => {
+              cartItems.length ? setDisplayCart(true) : "";
+            }}
+          >
+            {cartItems.length ? (
+              <BsBag className="w-5 h-5 text-green-500" />
+            ) : (
+              <BsBag className="w-5 h-5" />
+            )}
+            {cartItems.length ? (
+              <div className="text-green-500 absolute top-0 right-0">
+                {cartItems.length}
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       </div>
       {search ? (
@@ -74,12 +104,18 @@ const Nav = () => {
             </div>
             <IoMdClose
               className="hidden md:block w-5 h-5 absolute right-[5%]"
-              onClick={() => setSearch(false)}
+              onClick={() => {
+                setSearch(false);
+                document.body.style.overflow = "scroll";
+              }}
             />
           </div>
           <div
             className="z-10 absolute top-20 left-0 right-0 bottom-0 bg-black bg-opacity-40"
-            onClick={() => setSearch(false)}
+            onClick={() => {
+              setSearch(false);
+              document.body.style.overflow = "scroll";
+            }}
           >
             {" "}
           </div>
@@ -97,6 +133,7 @@ const Nav = () => {
                   onClick={() => {
                     setSearch(false);
                     setFilter(false);
+                    document.body.style.overflow = "scroll";
                   }}
                 />
               </div>
@@ -108,12 +145,11 @@ const Nav = () => {
                   <div
                     className="flex items-center gap-2"
                     onClick={() => {
-                      if (categorie === category)
-                      {
+                      if (categorie === category) {
                         setCategory("All Categories");
-                        return ;
+                        return;
                       }
-                      setCategory(category)
+                      setCategory(category);
                     }}
                     key={category}
                   >
@@ -128,7 +164,10 @@ const Nav = () => {
           </div>
           <div
             className="z-10 absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-40"
-            onClick={() => setFilter(false)}
+            onClick={() => {
+              setFilter(false);
+              document.body.style.overflow = "scroll";
+            }}
           >
             {" "}
           </div>
@@ -136,6 +175,22 @@ const Nav = () => {
       ) : (
         ""
       )}
+      {displayCart ? (
+        <div className="absolute z-80 top-0 left-0 h-screen w-screen font-normal">
+          <div className="z-40 absolute top-5 bottom-5 right-0 w-screen sm:w-[500px] font-normal bg-white">
+
+          </div>
+          <div
+            className="z-10 absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-40"
+            onClick={() => setDisplayCart(false)}
+          >
+            {" "}
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      <Items data={data} />
     </div>
   );
 };
