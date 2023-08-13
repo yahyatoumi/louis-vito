@@ -20,14 +20,13 @@ const Items: React.FC<Prop> = (props) => {
     }
   }
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
       {props?.data?.map((item) => (
         <div
           key={item.id}
           className="relative max-h-[600px] min-h-[500px] flex flex-col bg-gradient-to-tl from-[#fff] via-[#fff] to-[#eee] justify-left group"
         >
           {" "}
-          {/* item */}
           <img
             className="h-[50%] w-[80%] max-w-[250px] mx-auto mt-10"
             src={item.image}

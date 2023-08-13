@@ -32,7 +32,7 @@ const Nav = () => {
     <div className="relative font-vitton font-semibold w-screen">
       {
         search ?
-        <div className="sticky top-0 z-50 h-screen w-screen">
+        <div className="fixed top-0 z-50 h-screen w-screen">
           <div className="z-20 absolute top-20 md:top-0  w-screen flex justify-center items-center h-16 md:h-20 bg-white">
             <div className="bg-[#f6f5f3] flex items-center w-full md:w-[600px] mx-5 h-8 md:h-10 rounded ">
               <BiSearch className="w-5 h-5 ml-5 mr-2" />
@@ -46,7 +46,7 @@ const Nav = () => {
               className="hidden md:block w-5 h-5 absolute right-[5%]"
               onClick={() => {
                 setSearch(false);
-                document.body.style.overflow = "scroll";
+                document.body.style.overflowY = "scroll";
               }}
             />
           </div>
@@ -54,7 +54,7 @@ const Nav = () => {
             className="z-10 absolute top-20 left-0 right-0 bottom-0 bg-black bg-opacity-40"
             onClick={() => {
               setSearch(false);
-              document.body.style.overflow = "scroll";
+              document.body.style.overflowY = "scroll";
             }}
           >
             {" "}
@@ -75,7 +75,7 @@ const Nav = () => {
             className="absolute right-[5%] items-center gap-2 cursor-pointer md:flex md:relative"
             onClick={() => {
               setSearch(true);
-              document.body.style.overflow = "hidden";
+              document.body.style.overflowY = "hidden";
             }}
           >
             <BiSearch className="w-5 h-5" />
@@ -92,14 +92,14 @@ const Nav = () => {
       }
       
       <div
-        className={`flex top-20  sticky z-10  bg-white justify-between justify-center items-center px-[5%] h-16 text-xs`}
+        className={`flex top-20  sticky z-10  bg-white justify-between items-center px-[5%] h-16 text-xs`}
       >
         <span className="cursor-pointer">{categorie}</span>
         <div className="flex items-center gap-4">
           <div
             onClick={() => {
               setFilter(true);
-              document.body.style.overflow = "hidden";
+              document.body.style.overflowY = "hidden";
             }}
             className="hover:bg-[#f6f5f3] cursor-pointer flex items-center gap-2 h-8 px-3 rounded-3xl border border-black"
           >
@@ -127,41 +127,10 @@ const Nav = () => {
           </div>
         </div>
       </div>
-      {/* {search ? (
-        <div className="absolute top-0 left-0 h-screen w-screen">
-          <div className="z-20 absolute top-20 md:top-0  w-screen flex justify-center items-center h-16 md:h-20 bg-white">
-            <div className="bg-[#f6f5f3] flex items-center w-full md:w-[600px] mx-5 h-8 md:h-10 rounded ">
-              <BiSearch className="w-5 h-5 ml-5 mr-2" />
-              <input
-                type="text"
-                className="bg-transparent w-full outline-none text-sm"
-                placeholder="Search For LV"
-              />
-            </div>
-            <IoMdClose
-              className="hidden md:block w-5 h-5 absolute right-[5%]"
-              onClick={() => {
-                setSearch(false);
-                document.body.style.overflow = "scroll";
-              }}
-            />
-          </div>
-          <div
-            className="z-10 absolute top-20 left-0 right-0 bottom-0 bg-black bg-opacity-40"
-            onClick={() => {
-              setSearch(false);
-              document.body.style.overflow = "scroll";
-            }}
-          >
-            {" "}
-          </div>
-        </div>
-      ) : (
-        ""
-      )} */}
+      
       {filter ? (
-        <div className="absolute top-0 left-0 h-screen w-screen font-normal">
-          <div className="w-full flex flex-col items-center md:w-[600px] z-20 absolute top-0 right-0 h-screen bg-white p-20">
+        <div className="fixed z-40 top-0 left-0 h-screen w-screen font-normal">
+          <div className="w-full flex flex-col items-center md:w-[600px] md:max-w-[30%] z-20 absolute top-0 right-0 h-screen bg-white p-20">
             <div className="w-full flex items-center justify-center gap-1 sm:gap-6">
               <div className="p-2 -ml-2">
                 <BiSolidChevronLeft
@@ -169,7 +138,7 @@ const Nav = () => {
                   onClick={() => {
                     setSearch(false);
                     setFilter(false);
-                    document.body.style.overflow = "scroll";
+                    document.body.style.overflowY = "scroll";
                   }}
                 />
               </div>
@@ -202,7 +171,7 @@ const Nav = () => {
             className="z-10 absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-40"
             onClick={() => {
               setFilter(false);
-              document.body.style.overflow = "scroll";
+              document.body.style.overflowY = "scroll";
             }}
           >
             {" "}
@@ -212,10 +181,10 @@ const Nav = () => {
         ""
       )}
       {displayCart ? (
-        <div className="sticky top-0 left-0 h-screen w-screen font-normal">
-          <div className="z-50 absolute top-5 bottom-5 right-0 w-screen sm:w-[500px] font-normal bg-white"></div>
+        <div className="z-40 fixed top-0 left-0 right-0 bottom-0 font-normal">
+          <div className="z-50 absolute top-5 bottom-5 right-0 w-screen sm:w-[500px] max-w-[30%] font-normal bg-white"></div>
           <div
-            className="z-50 absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-40"
+            className="z-40 absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-40"
             onClick={() => setDisplayCart(false)}
           >
             {" "}
