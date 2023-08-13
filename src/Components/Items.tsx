@@ -20,7 +20,7 @@ const Items: React.FC<Prop> = (props) => {
     }
   }
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+    <div className="z-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
       {props?.data?.map((item) => (
         <div
           key={item.id}
@@ -50,4 +50,4 @@ const Items: React.FC<Prop> = (props) => {
   );
 };
 
-export default Items;
+export default React.memo(Items);
