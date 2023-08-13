@@ -2,7 +2,6 @@ import React from "react";
 import {BiChevronDown} from "react-icons/bi"
 import { useContext } from "react";
 import CartContext from "../Contexts/CartContext";
-import { useEffect } from "react";
 
 
 interface Prop {
@@ -10,9 +9,6 @@ interface Prop {
 }
 const Items: React.FC<Prop> = (props) => {
   const [cartItems, setCartItems] = useContext(CartContext);
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
   const addHandler = (item : Item) => {
     if (!cartItems.some(p => p.id === item.id))
     {

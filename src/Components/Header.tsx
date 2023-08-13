@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Search from "./Search";
 import Nav from "./Nav";
 import FilterSection from "./FilterSection";
@@ -15,8 +15,20 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = (props) => {
   const [search, setSearch] = useState(false);
   const [displayCart, setDisplayCart] = useState(false);
-  const [cartItems, setCartItems]= useContext(CartContext);
+  const [cartItems, setCartItems] = useContext(CartContext);
 
+  useEffect(() => {
+    const locatlItems = JSON.parse(
+      window.localStorage.getItem("CART_ITEMS") || "{}"
+    );
+    setCartItems(locatlItems);
+  }, []);
+  useEffect(() => {
+    if (cartItems.length)
+      window.localStorage.setItem("CART_ITEMS", JSON.stringify(cartItems));
+    else
+    window.localStorage.setItem("CART_ITEMS", JSON.stringify([]));
+  }, [cartItems]);
   return (
     <div className="sticky top-0 z-50 font-vitton font-semibold w-screen">
       {search ? (
@@ -50,10 +62,14 @@ const Header: React.FC<HeaderProps> = (props) => {
               </div>
             </div>
             <div className="flex flex-col w-full">
-              {cartItems.map(item => (
+              {cartItems.map((item) => (
                 <div className="flex bg-gray-500 w-full m-2">
                   <div className="h-32 w-20 p-2 flex items-center justify-center bg-[#eee]">
-                    <img src={item.image} className="min-h-[50%]" alt="" />
+                    <img
+                      src={item.image}
+                      className="min-h-[50%] rounded"
+                      alt=""
+                    />
                   </div>
                   <div></div>
                 </div>

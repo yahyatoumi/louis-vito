@@ -9,7 +9,7 @@ import Items from "./Components/Items";
 function App() {
   const [cartItems, setCartItems] = useState<Item[]>([]);
   const [categorie, setCategory] = useState("All Categories");
-  const { data } = useQuery([categorie], () =>
+  const { data, error, isLoading } = useQuery([categorie], () =>
     fetchAll(
       categorie === "All Categories"
         ? "/products"
@@ -19,7 +19,14 @@ function App() {
   return (
     <CartContext.Provider value={[cartItems, setCartItems]}>
       <Header categorie={categorie} setCategory={setCategory} />
-      <Items data={data} />
+      {
+        isLoading && <div>Loading...</div>
+      }
+      {
+        error ? <div>ooopss API Error!...</div>
+        : <Items data={data} />
+      }
+      
     </CartContext.Provider>
   );
 }
