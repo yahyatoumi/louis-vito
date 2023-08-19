@@ -37,7 +37,7 @@ const Items: React.FC<Prop> = (props) => {
             onClick={() => {addHandler(item)}}>ADD</div>
           </div>
           <div className="flex flex-col items-center w-full px-10">
-            <span className="">{item.title}</span>
+            <span className="text-center">{item.title}</span>
             <span>{item.price}$</span>
           </div>
         </div>
